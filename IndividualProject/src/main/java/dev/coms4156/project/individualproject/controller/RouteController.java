@@ -102,4 +102,33 @@ public class RouteController {
     }
   }
 
+  @PatchMapping({"/book/{bookId}/checkout"})
+  public ResponseEntity<?> checkoutCopy(@PathVariable Integer bookId){
+    try{
+      for (Book book : mockApiService.getBooks()){
+        if (bookId.equals(book.getId())) {
+          String ret_date = mockApiService.checkoutBook(book);
+          return new ResponseEntity<>(book, HttpStatus.OK);
+        }
+      }
+
+      return new ResponseEntity<>("Book not found.", HttpStatus.NOT_FOUND);
+    } catch (Exception e) {
+      System.err.println(e);
+      return new ResponseEntity<>("Error occurred when checking out a copy.",
+              HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @GetMapping({"/books/recommendation"})
+  public ResponseEntity<?> getRecommendation(){
+    try{
+      return new ResponseEntity<>(mockApiService.getRecommendations(), HttpStatus.OK);
+    } catch (Exception e){
+      System.err.println(e);
+      return new ResponseEntity<>("Error occurred when getting recommendations.",
+              HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
 }

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.coms4156.project.individualproject.model.Book;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +16,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class MockApiService {
 
+  private static final int NUM_TOP_BOOK = 5;
   private ArrayList<Book> books;
+  private PriorityQueue<Book> topBooks = new PriorityQueue<>(Comparator.comparingInt(Book::getAccessedCount));
 
   /**
    * Constructs a new {@code MockApiService} and loads book data from a JSON file located at
@@ -64,5 +68,29 @@ public class MockApiService {
 
   public void printBooks() {
     books.forEach(System.out::println);
+  }
+
+  public void updateTopBooks(Book book){
+    if(topBooks.size() < NUM_TOP_BOOK){
+      topBooks.offer(book);
+    }
+    else if(book.getAccessedCount() > topBooks.peek().getAccessedCount()){
+      topBooks.poll();
+      topBooks.offer(book);
+    }
+  }
+
+  public String checkoutBook(Book book){
+    String return_date = book.checkoutCopy();
+    if(return_date != null){
+      this.updateTopBooks(book);
+      return return_date;
+    }
+    return "Failed";
+
+  }
+
+  public Integer[] getRecommendations(){
+    return topBooks.toArray(new Integer[0]);
   }
 }
