@@ -3,6 +3,7 @@ package dev.coms4156.project.individualproject.model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 /**
  * This class defines the Book model.
@@ -20,6 +21,7 @@ public class Book implements Comparable<Book> {
   private int copiesAvailable;
   private ArrayList<String> returnDates;
   private int totalCopies;
+  private int accessedCount;
 
   /**
    * Very basic Book constructor.
@@ -40,6 +42,7 @@ public class Book implements Comparable<Book> {
     this.copiesAvailable = 1;
     this.returnDates = new ArrayList<>();
     this.totalCopies = 1;
+    this.accessedCount = 0;
   }
 
   /**
@@ -71,6 +74,7 @@ public class Book implements Comparable<Book> {
     this.copiesAvailable = copiesAvailable;
     this.returnDates = new ArrayList<>();
     this.totalCopies = totalCopies;
+    this.accessedCount = 0;
   }
 
   /**
@@ -89,6 +93,7 @@ public class Book implements Comparable<Book> {
     this.copiesAvailable = 1;
     this.totalCopies = 1;
     this.id = 0;
+    this.accessedCount = 0;
   }
 
   public boolean hasCopies() {
@@ -135,6 +140,7 @@ public class Book implements Comparable<Book> {
       LocalDate dueDate = today.plusWeeks(2);
       String dueDateStr = dueDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
       returnDates.add(dueDateStr);
+      accessedCount += 1;
       return dueDateStr;
     }
 
@@ -250,6 +256,8 @@ public class Book implements Comparable<Book> {
   public void setTotalCopies(int totalCopies) {
     this.totalCopies = totalCopies;
   }
+
+  public int getAccessedCount(){return accessedCount;}
 
   @Override
   public int compareTo(Book other) {
