@@ -6,6 +6,7 @@ import dev.coms4156.project.individualproject.model.Book;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
 import org.springframework.stereotype.Service;
 
@@ -73,10 +74,12 @@ public class MockApiService {
   public void updateTopBooks(Book book){
     if(topBooks.size() < NUM_TOP_BOOK){
       topBooks.offer(book);
+      System.out.println("------------------Book offered!--------------");
     }
     else if(book.getAccessedCount() > topBooks.peek().getAccessedCount()){
       topBooks.poll();
       topBooks.offer(book);
+      System.out.println("------------------Book replaced!");
     }
   }
 
@@ -87,10 +90,12 @@ public class MockApiService {
       return return_date;
     }
     return "Failed";
-
   }
 
-  public Integer[] getRecommendations(){
-    return topBooks.toArray(new Integer[0]);
+  public List<Book> getRecommendations(){
+    List<Book> tops = new ArrayList<>(topBooks);
+    List<Book> randoms = books.subList(0, 10-tops.size());
+    tops.addAll(randoms);
+    return tops;
   }
 }

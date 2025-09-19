@@ -3,6 +3,7 @@ package dev.coms4156.project.individualproject.controller;
 import dev.coms4156.project.individualproject.model.Book;
 import dev.coms4156.project.individualproject.service.MockApiService;
 import java.util.ArrayList;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +25,8 @@ public class RouteController {
 
   @GetMapping({"/", "/index"})
   public String index() {
-    return "Welcome to the home page! In order to make an API call direct your browser"
-        + "or Postman to an endpoint.";
+    return "Welcome to the home page! In order to make an API call direct your browser "
+        + "or Postman to an endpoint.\n";
   }
 
   /**
@@ -45,7 +46,7 @@ public class RouteController {
       }
     }
 
-    return new ResponseEntity<>("Book not found.", HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>("Book not found.\n", HttpStatus.NOT_FOUND);
   }
 
   /**
@@ -69,7 +70,7 @@ public class RouteController {
       return new ResponseEntity<>(availableBooks, HttpStatus.OK);
     } catch (Exception e) {
       System.err.println(e);
-      return new ResponseEntity<>("Error occurred when getting all available books",
+      return new ResponseEntity<>("Error occurred when getting all available books.\n",
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -94,10 +95,10 @@ public class RouteController {
         }
       }
 
-      return new ResponseEntity<>("Book not found.", HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>("Book not found.\n", HttpStatus.NOT_FOUND);
     } catch (Exception e) {
       System.err.println(e);
-      return new ResponseEntity<>("Error occurred when adding a copy.",
+      return new ResponseEntity<>("Error occurred when adding a copy.\n",
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -108,14 +109,18 @@ public class RouteController {
       for (Book book : mockApiService.getBooks()){
         if (bookId.equals(book.getId())) {
           String ret_date = mockApiService.checkoutBook(book);
-          return new ResponseEntity<>(book, HttpStatus.OK);
+          if(ret_date.equals("Failed")){
+            return new ResponseEntity<>("No more copy as of now. Try again later!\n",
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+          }
+          return new ResponseEntity<String>("Success! Return by "+ret_date+".\n", HttpStatus.OK);
         }
       }
 
       return new ResponseEntity<>("Book not found.", HttpStatus.NOT_FOUND);
     } catch (Exception e) {
       System.err.println(e);
-      return new ResponseEntity<>("Error occurred when checking out a copy.",
+      return new ResponseEntity<>("Error occurred when checking out a copy.\n",
               HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -123,10 +128,10 @@ public class RouteController {
   @GetMapping({"/books/recommendation"})
   public ResponseEntity<?> getRecommendation(){
     try{
-      return new ResponseEntity<>(mockApiService.getRecommendations(), HttpStatus.OK);
+      return new ResponseEntity<List<Book>>(mockApiService.getRecommendations(), HttpStatus.OK);
     } catch (Exception e){
       System.err.println(e);
-      return new ResponseEntity<>("Error occurred when getting recommendations.",
+      return new ResponseEntity<>("Error occurred when getting recommendations.\n",
               HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
