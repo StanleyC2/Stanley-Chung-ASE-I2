@@ -25,7 +25,7 @@ public class RouteController {
 
   @GetMapping({"/", "/index"})
   public String index() {
-    return "Welcome to the home page! In order to make an API call direct your browser"
+    return "Welcome to the home page! In order to make an API call direct your browser "
         + "or Postman to an endpoint.\n";
   }
 

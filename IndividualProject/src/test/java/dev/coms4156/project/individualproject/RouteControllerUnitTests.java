@@ -24,7 +24,7 @@ class TestingWebApplicationTest {
 
     @Test
     void homeRouteTest() throws Exception {
-        String welcomeMessage = "Welcome to the home page! In order to make an API call direct your browser or Postman to an endpoint.";
+        String welcomeMessage = "Welcome to the home page! In order to make an API call direct your browser or Postman to an endpoint.\n";
         this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk()).andExpect(content().string(containsString(welcomeMessage)));
     }
 
@@ -45,7 +45,7 @@ class TestingWebApplicationTest {
     void addCopyTest() throws Exception{
         this.mockMvc.perform(patch("/book/0/add"))
                 .andDo(print())
-                .andExpect(status().isIAmATeapot())
+                .andExpect(status().isNotFound())
                 .andExpect(content().string(containsString("Book not found")));
 
         this.mockMvc.perform(patch("/book/1/add"))
@@ -56,7 +56,7 @@ class TestingWebApplicationTest {
 
     @Test
     void getAvailableTest() throws Exception{
-        this.mockMvc.perform(put("/books/available"))
+        this.mockMvc.perform(get("/books/available"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("copiesAvailable")));
