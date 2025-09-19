@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import dev.coms4156.project.individualproject.model.Book;
 import java.util.ArrayList;
+import java.util.Arrays;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -62,6 +63,17 @@ public class BookUnitTests {
     book.setReturnDates(temp);
     assertNotEquals(book.getReturnDates().size(), 0);
     book.returnCopy(date);
+  }
+
+  @Test
+  public void hasMultipleAuthorsTest(){
+    ArrayList<String> temp = book.getAuthors();
+    ArrayList<String> multi = new ArrayList<>(Arrays.asList("a1", "a2"));
+    book.setAuthors(new ArrayList<String>());
+    assertFalse(book.hasMultipleAuthors());
+    book.setAuthors(multi);
+    assertTrue(book.hasMultipleAuthors());
+    book.setAuthors(temp);
   }
 
 }
