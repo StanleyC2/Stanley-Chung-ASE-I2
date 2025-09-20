@@ -18,3 +18,7 @@ Link: https://docs.oracle.com/javase/8/docs/api/java/util/PriorityQueue.html?utm
 Link: https://docs.oracle.com/javase/8/docs/api/java/util/List.html for List syntax and function signatures.
 
 Link: https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html for ArrayList syntax and function signatures.
+
+Link: https://faun.pub/continuous-integration-of-java-project-with-github-actions-7a8a0e8246ef for workflow tutorial
+
+Link: https://docs.github.com/en/actions/reference/runners/github-hosted-runners?utm_source=chatgpt.com for changing the runs-on value
