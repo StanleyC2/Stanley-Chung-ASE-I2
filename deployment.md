@@ -1,0 +1,3 @@
+Platform as a Service (PaaS) is a cloud computing model that takes care of development environment setup, such as server, storage, and networking, for developers, so they can focus on delivering applications.
+
+It is especially useful in CI/CD-driven deployment because it provides a cloud-based environment integrated with tools, services and infrastructure that streamline code integration, automated testing, and rapid deployment, enabling faster delivery of software.
